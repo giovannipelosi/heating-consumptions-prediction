@@ -61,6 +61,7 @@ networks used (in order):
 - big_2 = feedforwardnet([5 5]);
 - big_3 = feedforwardnet([26 15 15]);
 
+
 Where small indicates that we used 11 features and big indicates that we used all the 26 features
 
 ###### conclusions experiment_1
@@ -125,7 +126,7 @@ network used (in order):
         regressionLayer()];
     layers{end + 1} = layers_7;
     
- options = trainingOptions('sgdm', ...
+    options = trainingOptions('sgdm', ...
     'MaxEpochs',300, ...
     'GradientThreshold',1, ...
     'InitialLearnRate',0.005, ...
@@ -134,8 +135,7 @@ network used (in order):
     'LearnRateDropFactor',0.2, ...
     'MiniBatchSize', 40,...
     'Verbose',0 );
-    
-    
+   
 Here we used the same nework structure and we tryied to work a bit on the data. In particular we each network has been trained on four different datasets:
 - small original
 - small de_season (we simply tried to remove the "day" periodc trend, computed by avareging the consumption (grouped by hour) for the days of the training dataset) 
