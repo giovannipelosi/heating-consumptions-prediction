@@ -4,19 +4,19 @@ rand('seed',1234); % used for reproducibility
 kind = ["heating" , "elec"]; % kind of data
 
 % uncomment to cycle on all the data (see end of the script)
-for m = 1:2
-for n = 1:3
-for i = 1:28
+%for m = 1:2
+%for n = 1:3
+%for i = 1:28
 
 % set for test otherwise comment
-%i = 7;
-%n = 3;
-%m = 1;
+i = 7;
+n = 3;
+m = 1;
 
 
 % LOAD DATA
-name = string(i) + "_output_2" ;
-figure_name =  string(i) + "_figure_2" ;
+name = string(i) + "_output_3" ;
+figure_name =  string(i) + "_figure_3" ;
 save_path = 'Results/season' + string(n) + '/' + kind(m) +  '/';
 load_path = 'deep-learning/season' + string(n) + '/' + string(kind(m)) + '/' + string(i) + 'foldv/' + string(i);
 
@@ -28,6 +28,21 @@ test_out = csvread(load_path + 'fold_out_ts')';
 small_tr_x = all_tr_x(1:11 ,: ); % consider only the first 11 features
 test_small_x = test_x(1:11 , :); % smaller version of the dataset
 
+% TEST with data multiplication ------------------------------
+% VERY LONG EXECUTION TIME
+
+data_set = [all_tr_x ; tr_out];
+enlarged_data = [data_set dataMultiplication(data_set, 5, 0.05, false)];
+
+all_tr_x = enlarged_data(1:26 ,: );
+tr_out = enlarged_data(27 , :);
+small_tr_x = all_tr_x(1:11 ,: );
+test_small_x = test_x(1:11 , :);
+
+size(data_set)
+size(enlarged_data)
+
+% END TEST with data multiplication --------------------------
 
 %% perform preprocessing ? -> remove linear trends and seasonal trends
 
@@ -274,9 +289,9 @@ result_path_agg  = fullfile( save_path, name + "_agg" + '.dat' );
 writetable(table_pred, result_path);
 writetable(table_aggr, result_path_agg);
 
-(m-1) * 2 + (n-1) * 3 + i
+(m-1) * 28 * 3 + (n-1) * 28 + i % counter to check progression of the work
 %% end
 % uncomment to cycle on all the data (see begin of the script)
-end
-end
-end
+%end
+%end
+%end
