@@ -155,7 +155,84 @@ Same experiment structure as experiment_2 but we tried to increase the dataset b
 Too much time for training all
 Partial results apparently not significantly better when compared to the original datasets.
 
+#### experiment 4 (results ending by "output_4") experiment_4
+removed the lstm layer
+and reduced the Max epoch
+
+    layers_1 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(20)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_1;
+    
+    layers_2 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_2;
+    
+    layers_3 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_3;
+    
+    layers_4 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_4;
+    
+    layers_5 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_5;
+    
+    layers_6 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_6;
+    
+    layers_7 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(100)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_7;
+    
+    options = trainingOptions('sgdm', ...
+    'MaxEpochs',120, ...
+    'GradientThreshold',1, ...
+    'InitialLearnRate',0.005, ...
+    'LearnRateSchedule','piecewise', ...
+    'LearnRateDropPeriod',125, ...
+    'LearnRateDropFactor',0.2, ...
+    'MiniBatchSize', 40,...
+    'Verbose',0 );
+
+
+
 ## TO DO NEXT
-- work more on the paramenters of the net
+- work more on the paramenters of the net 
 - try to enlarge the dataset by considering 2 months for training
+- use of already trained data -> transfer learning :
+1) try to find nets already trained by others (on similar datasets)
+2) start from the net of the previous month and re-train it we the data of the current month.. (check foe repetetion in the datasets)
 - ...
+
+## EVALUATION
+- compare all the results based on different metrics (rmse, ...)
