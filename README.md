@@ -158,6 +158,7 @@ Partial results apparently not significantly better when compared to the origina
 #### experiment 4 (results ending by "output_4") experiment_4
 removed the lstm layer
 and reduced the Max epoch
+(no data multiplication)
 
     layers_1 = [...
         sequenceInputLayer(number_of_inputs(k))
@@ -236,3 +237,9 @@ and reduced the Max epoch
 
 ## EVALUATION
 - compare all the results based on different metrics (rmse, ...)
+- compare nets according to :
+1) overall performance
+2) seasonal performance
+3) month ? 
+4) aggregation?
+5) ...
