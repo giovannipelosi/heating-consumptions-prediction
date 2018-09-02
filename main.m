@@ -3,20 +3,23 @@ rand('seed',1234); % used for reproducibility
 
 kind = ["heating" , "elec"]; % kind of data
 
+% check the execution time
+tic % start
+
 % uncomment to cycle on all the data (see end of the script)
-%for m = 1:2
-%for n = 1:3
-%for i = 1:28
+for m = 1:2
+for n = 1:3
+for i = 1:28
 
 % set for test otherwise comment
-i = 7;
-n = 3;
-m = 1;
+%i = 7;
+%n = 3;
+%m = 1;
 
 
 % LOAD DATA
-name = string(i) + "_output_3" ;
-figure_name =  string(i) + "_figure_3" ;
+name = string(i) + "_output_4" ; % INCREASE COUNTER
+figure_name =  string(i) + "_figure_4" ; % INCREASE COUNTER
 save_path = 'Results/season' + string(n) + '/' + kind(m) +  '/';
 load_path = 'deep-learning/season' + string(n) + '/' + string(kind(m)) + '/' + string(i) + 'foldv/' + string(i);
 
@@ -30,7 +33,7 @@ test_small_x = test_x(1:11 , :); % smaller version of the dataset
 
 % TEST with data multiplication ------------------------------
 % VERY LONG EXECUTION TIME
-
+%{
 data_set = [all_tr_x ; tr_out];
 enlarged_data = [data_set dataMultiplication(data_set, 5, 0.05, false)];
 
@@ -41,7 +44,7 @@ test_small_x = test_x(1:11 , :);
 
 size(data_set)
 size(enlarged_data)
-
+%}
 % END TEST with data multiplication --------------------------
 
 %% perform preprocessing ? -> remove linear trends and seasonal trends
@@ -108,11 +111,11 @@ number_of_inputs = [11 26];
 %num_of_layers_sets = 7; % modify if you change the layers
 layers = {}; %list of the sets of layers
 
-for k = 1:2
+for k = 1:2 % the two possible sets of inputs
     
     layers_1 = [...
         sequenceInputLayer(number_of_inputs(k))
-        lstmLayer(20)
+        fullyConnectedLayer(20)
         fullyConnectedLayer(1)
         regressionLayer()];
     layers{end + 1} = layers_1;
@@ -168,7 +171,7 @@ for k = 1:2
 end
 
 options = trainingOptions('sgdm', ...
-    'MaxEpochs',300, ...
+    'MaxEpochs',120, ...
     'GradientThreshold',1, ...
     'InitialLearnRate',0.005, ...
     'LearnRateSchedule','piecewise', ...
@@ -197,11 +200,19 @@ options = trainingOptions('sgdm', ...
 layers_size_half = size(layers,2) / 2;
 nets = cell(1 , 4 * layers_size_half); % list of networks
 
+num_of_plots = 4 * layers_size_half + 1;
+plot_legend = cell(1,num_of_plots); % used to give a name to the output of the nets (see the graphs)
+
+
 for k = 0:layers_size_half-1
     nets{4 * k + 1} = trainNetwork(small_tr_x, tr_out, layers{k + 1}, options);
+    plot_legend{4 * k + 1} = 'small_orig_' + string(4 * k + 1);
     nets{4 * k + 2} = trainNetwork(de_season_data(1:11, : ), de_season_data(end, : ), layers{k + 1}, options);
+    plot_legend{4 * k + 2} = 'small_de_tr_' + string(4 * k + 2);
     nets{4 * k + 3} = trainNetwork(all_tr_x, tr_out, layers{layers_size_half + k + 1}, options);
+    plot_legend{4 * k + 3} = 'all_orig_' + string(4 * k + 3);
     nets{4 * k + 4} = trainNetwork(de_season_data(1:26, : ), de_season_data(end, : ), layers{layers_size_half + k + 1}, options);
+    plot_legend{4 * k + 4} = 'all_de_tr_' + string(4 * k + 4);
 end
 
 %% predict
@@ -234,17 +245,19 @@ end
 
 
 %% plot and save data
+
 f_1 = figure;
 title (figure_name)
 % plot predicitons
-for k = 1:size(predictions,2)
+for k = 1:num_of_plots-1
     plot(predictions{k});
     hold on
 end
 % plot orignal data
-plot(test_out)
+plot(test_out, 'LineWidth', 2)
 hold on
-legend ('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','original');
+plot_legend{end} = 'original';
+legend (plot_legend);
 temp = save_path + figure_name;
 saveas(f_1,temp , 'fig');
 hold off
@@ -258,7 +271,7 @@ for k = 1:size(composed_predictions,2)
     hold on
 end
 % plot orignal data
-plot(test_out)
+plot(test_out, 'LineWidth', 2)
 hold on
 legend ('small','small_de','all','all_de','original');
 temp = save_path + figure_name + "_aggregated";
@@ -292,6 +305,9 @@ writetable(table_aggr, result_path_agg);
 (m-1) * 28 * 3 + (n-1) * 28 + i % counter to check progression of the work
 %% end
 % uncomment to cycle on all the data (see begin of the script)
-%end
-%end
-%end
+end
+end
+end
+
+% end of the execution
+toc
