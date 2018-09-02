@@ -155,7 +155,7 @@ Same experiment structure as experiment_2 but we tried to increase the dataset b
 Too much time for training all
 Partial results apparently not significantly better when compared to the original datasets.
 
-#### experiment 4 (results ending by "output_4") experiment_4
+#### experiment 4 (results ending by "output_4") experiment_4 1h 10m
 removed the lstm layer
 and reduced the Max epoch
 (no data multiplication)
