@@ -226,6 +226,88 @@ and reduced the Max epoch
     'Verbose',0 );
 
 
+#### experiment 5 and 6
+change the training options but same structures
+
+    layers_1 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(20)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_1;
+    
+    layers_2 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_2;
+    
+    layers_3 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_3;
+    
+    layers_4 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_4;
+    
+    layers_5 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_5;
+    
+    layers_6 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_6;
+    
+    layers_7 = [...
+        sequenceInputLayer(number_of_inputs(k))
+        fullyConnectedLayer(100)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    layers{end + 1} = layers_7;
+
+    options_1 = trainingOptions('sgdm', ...
+        'MaxEpochs',220, ...
+        'GradientThreshold',1, ...
+        'InitialLearnRate',0.005, ...
+        'LearnRateSchedule','piecewise', ...
+        'LearnRateDropPeriod',125, ...
+        'LearnRateDropFactor',0.2, ...
+        'MiniBatchSize', 40,...
+        'Verbose',0 );
+    nets_options{end + 1} = options_1;
+
+
+    options_2 = trainingOptions('adam', ...
+        'MaxEpochs',220, ...
+        'GradientThreshold',0.95, ...
+        'InitialLearnRate',0.05, ...
+        'LearnRateSchedule','piecewise', ...
+        'LearnRateDropPeriod',70, ...
+        'LearnRateDropFactor',0.3, ...
+        'MiniBatchSize', 40,...
+        'SquaredGradientDecayFactor',0.95,...
+        'L2Regularization',0.0001,...
+        'Verbose',0 );
+    nets_options{end + 1} = options_2;
 
 ## TO DO NEXT
 - work more on the paramenters of the net 
