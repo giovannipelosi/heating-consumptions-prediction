@@ -318,6 +318,53 @@ change the training options but same structures
 - ...
 
 ## EVALUATION
+### 1) evaluations of the output of the nets from _4 to _6 (output_4,output_5,output_6) -> 84 nets are considered (mean of the rsme for each season)
+#### TOP 10 elec
+     season 1                           season 2                            season 3
+     kind of net :        rmse          kind of net :          rmse         kind of net :        rmse
+ 1   "all_deseason_40"    "0.059021"    "small_deseason_70"    "0.11623"    "all_deseason_56"    "0.055899"
+ 2   "all_deseason_72"    "0.059078"    "small_deseason_58"    "0.11646"    "all_deseason_80"    "0.055916"
+ 3   "all_deseason_32"    "0.059283"    "small_deseason_82"    "0.11652"    "all_deseason_44"    "0.056047"
+ 4   "all_deseason_44"    "0.059527"    "small_deseason_62"    "0.11675"    "all_deseason_40"    "0.056232"
+ 5   "all_deseason_76"    "0.060081"    "small_deseason_66"    "0.11722"    "all_deseason_36"    "0.056552"
+ 6   "all_deseason_68"    "0.060191"    "small_deseason_74"    "0.11753"    "all_deseason_76"    "0.056567"
+ 7   "all_deseason_16"    "0.060398"    "small_deseason_78"    "0.11814"    "all_deseason_68"    "0.056705"
+ 8  "all_deseason_80"    "0.060421"    "small_57"             "0.1183"     "all_deseason_60"    "0.057028"
+ 9   "all_deseason_8"     "0.061021"    "small_61"             "0.12021"    "all_deseason_64"    "0.057055"
+ 10   "all_deseason_36"    "0.061359"    "small_81"             "0.12337"    "all_deseason_72"    "0.057151"
+
+For all the seasons we can see that the trend_removal is quite effective. indeed almost all the best performing nets are those that have been trained using the de_season dataset. 
+Further investigation is necessary on the season 2. Apparetly a dataset with less features (11 instead of 26) allows the net to perform better.
+Almost all the nets come from the output_6 set (see the numbers on the name [from 57 to 84]) -> experiment 6 : options_2 -> 'adam' algorithm.
+
+#### TOP 10 heat
+     season 1                   season 2                            season 3
+     kind of net  rmse      kind of net :   rmse         kind of net :        rmse
+1    "all_55"    "0.1058"     "all_75"    "0.071589"    "all_deseason_84"    "0.059433"
+2    "all_35"    "0.10647"    "all_43"    "0.07177"     "all_deseason_64"    "0.059747"
+3    "all_71"    "0.10706"    "all_55"    "0.071785"    "all_deseason_60"    "0.060165"
+4    "all_31"    "0.10754"    "all_3"     "0.072347"    "all_deseason_28"    "0.06032" 
+5    "all_59"    "0.10768"    "all_47"    "0.072429"    "all_deseason_72"    "0.06074" 
+6    "all_43"    "0.10825"    "all_35"    "0.072557"    "all_deseason_68"    "0.060958"
+7    "all_63"    "0.10903"    "all_31"    "0.072701"    "all_deseason_80"    "0.06116" 
+8    "all_67"    "0.11012"    "all_67"    "0.073447"    "all_deseason_56"    "0.061252"
+9    "all_39"    "0.1102"     "all_79"    "0.073576"    "all_deseason_36"    "0.061338"
+10   "all_83"    "0.11024"    "all_51"    "0.073652"    "all_deseason_76"    "0.061376"
+
+For all the seasons the "all_features" dataset allowed better peformances.
+There is a significat difference of perfomance though, among the seasons; and only on season 3 the de_season preprocess has been helpful (season 3 is indeed a more clean dataset). 
+In season 3 the 'adam' algorithm has produced the best results -> Almost all the nets come from the output_6 set (see the numbers on the name [from 57 to 84]) -> experiment 6 : options_2 -> 'adam' algorithm.
+While there is not a clear winner (options_1 or options_2 [experiment 5 and 6]) for season 1 and 2.
+
+Overall we can conlude that the big feature dataset (26 features) allow to reach better performance(5 over 6). Different nets perform better on different dataset (with a preference for the adam algorithm).
+...
+
+TO DO
+modify the most promising nets in order to try to increase the perfomances. (working by season and preprocessed dataset).
+
+
+
+
 - compare all the results based on different metrics (rmse, ...)
 - compare nets according to :
 1) overall performance
