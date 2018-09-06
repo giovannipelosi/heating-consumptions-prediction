@@ -42,4 +42,4 @@ nets_options{end + 1} = options_3;
 
 
 %% compute
- train_net('5', [1:2],  [1:3], [1:28], nets_options);
+ train_net('7', [1:2],  [1:3], [1:28], nets_options);
