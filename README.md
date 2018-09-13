@@ -363,7 +363,10 @@ TO DO
 modify the most promising nets in order to try to increase the perfomances. (working by season and preprocessed dataset).
 
 
-
+# TO DO
+1) save the best net configuration (not considering the worst seasons)
+2) training with memory lstm -> on the small dataset -> increasing the training set for each prediction
+3) training the best nets (configurations) on bigger datasets (consider 6 weeks instead of 4 for training -> apply sliding_horizon)
 
 - compare all the results based on different metrics (rmse, ...)
 - compare nets according to :
