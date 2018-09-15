@@ -361,7 +361,7 @@ Overall we can conlude that the big feature dataset (26 features) allow to reach
 
 
 
-# Rechaping the dataset
+# Reshaping the dataset
 check the dataset big for the new datasets.
 (divided by season and (heating or elec))
 Then there is a distinction between slide_horizon and incremental data. 
