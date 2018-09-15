@@ -359,6 +359,31 @@ While there is not a clear winner (options_1 or options_2 [experiment 5 and 6]) 
 Overall we can conlude that the big feature dataset (26 features) allow to reach better performance(5 over 6). Different nets perform better on different dataset (with a preference for the adam algorithm).
 ...
 
+
+
+# Rechaping the dataset
+check the dataset big for the new datasets.
+(divided by season and (heating or elec))
+Then there is a distinction between slide_horizon and incremental data. 
+#### heating
+1) We have 6 week of training and one day (the next) for testing in the sliding_horizon dataset -> totally 15 datasets (0 to 14)
+2) In the incremental dataset we have 6 week for training and the next for testing (fro the dataset 0) then we add the next day in the train dataset and we test on the next (not in the training) day. And so on. In this way, for the last test we have 8 weeks for training and 1 day of testing.
+The sliding horizon datasets will be used to test if a classical feed forward nn perfroms better than with 4 weeks trainign (original sliding horizon dataset). While the incremental dataset will be used to train a lstm nn in order to see if the nets improves with more data for training (in particular here we will compare the performance of a ffnn trainend on the 26 features dataset, with the performance of a lstm nn trained on the 11 freatures dataset. The goal is to check if the memory layers of the lstm nn can substitute the absense of the 15 features (these features are just past data)
+#### elec
+Similar to the heating dataset be here we have 4 weeks of training and the last 2 weeks for testing (2 weeks less of data, compared to the heating dataset)
+
+## Expreiments
+Experiments will be divided according to the kind (elec or heating) and cosidering the nets that perform better in the best 2 seasons (depending on the kind of data)
+
+
+
+
+
+
+
+
+
+
 TO DO
 modify the most promising nets in order to try to increase the perfomances. (working by season and preprocessed dataset).
 
