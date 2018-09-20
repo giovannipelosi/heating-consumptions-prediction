@@ -10,6 +10,7 @@ https://it.mathworks.com/videos/developing-forecast-models-from-time-series-data
 https://it.mathworks.com/help/nnet/examples/time-series-forecasting-using-deep-learning.html
 https://it.mathworks.com/help/nnet/ug/improve-neural-network-generalization-and-avoid-overfitting.html
 https://it.mathworks.com/help/nnet/ug/ist-of-deep-learning-layers.html
+https://machinelearningmastery.com/improve-deep-learning-performance/
 
 ## data
 #### training data structure
@@ -375,8 +376,184 @@ Similar to the heating dataset be here we have 4 weeks of training and the last 
 ## Expreiments
 Experiments will be divided according to the kind (elec or heating) and cosidering the nets that perform better in the best 2 seasons (depending on the kind of data)
 
+#### Experiment 1 -> output_big_2
 
+    options
+    options_1 = trainingOptions('sgdm', ...
+        'MaxEpochs',420, ...
+        'GradientThreshold',1, ...
+        'InitialLearnRate',0.005, ...
+        'LearnRateSchedule','piecewise', ...
+        'LearnRateDropPeriod',185, ...
+        'LearnRateDropFactor',0.2, ...
+        'MiniBatchSize', 40,...
+        'Verbose',0 );
+    
+    options_2 = trainingOptions('adam', ...
+        'MaxEpochs',420, ...
+        'GradientThreshold',0.99, ...
+        'InitialLearnRate',0.25, ...
+        'LearnRateSchedule','piecewise', ...
+        'LearnRateDropPeriod',180, ...
+        'LearnRateDropFactor',0.2, ...
+        'MiniBatchSize', 40,...
+        'SquaredGradientDecayFactor',0.99,...
+        'L2Regularization',0.0001,...
+        'Verbose',0 );
+    
+    maxEpochs = 100;
+    miniBatchSize = 20;
+    options_3 = trainingOptions('sgdm', ...
+    'ExecutionEnvironment','cpu', ...
+    'GradientThreshold',1, ...
+    'MaxEpochs',maxEpochs, ...
+    'MiniBatchSize',miniBatchSize, ...
+    'SequenceLength','longest', ...
+    'Shuffle','never', ...
+    'Verbose',0);
 
+    % layers
+    
+        layers_2 = [...
+        sequenceInputLayer(26)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    
+        layers_3 = [...
+        sequenceInputLayer(26)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+
+        layers_4 = [...
+        sequenceInputLayer(26)
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+         
+        layers_5 = [...
+        sequenceInputLayer(26)
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    
+        layers_6 = [...
+        sequenceInputLayer(26)
+        fullyConnectedLayer(15)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(5)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+    
+        layers_7 = [...
+        sequenceInputLayer(26)
+        fullyConnectedLayer(100)
+        fullyConnectedLayer(1)
+        regressionLayer()];
+         
+    
+        layers_i_1 = [ ...
+        sequenceInputLayer(11)
+        lstmLayer(100,'OutputMode','sequence')
+        fullyConnectedLayer(1)
+        regressionLayer];
+    
+        layers_i_2 = [ ...
+        sequenceInputLayer(11)
+        lstmLayer(11,'OutputMode','sequence')
+        lstmLayer(11,'OutputMode','sequence')
+        fullyConnectedLayer(1)
+        regressionLayer];
+           
+    
+    if m == 1 % heating nets
+    
+    %%% SLIDING HORIZON
+    % 1)
+     nets{end + 1} = trainNetwork(slide_all_tr_x, slide_tr_out, layers_3 , options_1);
+    
+    % 2)
+     nets{end + 1} = trainNetwork(slide_all_tr_x, slide_tr_out, layers_4 , options_1);
+
+     % 3)
+     nets{end + 1} = trainNetwork(slide_all_tr_x, slide_tr_out, layers_6 , options_2);
+
+     % 4)
+     nets{end + 1} = trainNetwork(slide_all_tr_x, slide_tr_out, layers_5 , options_2);
+
+     
+     % 5)
+     nets{end + 1} = trainNetwork(slide_all_tr_x, slide_tr_out, layers_4 , options_2);
+    
+     %%% INCREMENTAL
+     
+     % 6) small 
+     nets{end + 1} = trainNetwork(incre_small_tr_x, incre_tr_out, layers_i_1 , options_1);
+ 
+     % 7) small
+     nets{end + 1} = trainNetwork(incre_small_tr_x, incre_tr_out, layers_i_2 , options_1);
+ 
+     % 8) all 
+     nets{end + 1} = trainNetwork(incre_all_tr_x, incre_tr_out, layers_3 , options_1);
+
+    
+    end
+
+    if m == 2 % elec nets
+    
+    %%% SLIDING HORIZON
+    
+     % 1)
+     nets{end + 1} = trainNetwork(slide_all_tr_x, slide_tr_out, layers_5 , options_2);
+     
+     % 2)
+     nets{end + 1} = trainNetwork(slide_all_tr_x, slide_tr_out, layers_7 , options_1);
+
+     % 3)
+     nets{end + 1} = trainNetwork(slide_all_tr_x, slide_tr_out, layers_2 , options_1);
+     
+     % 4)
+     nets{end + 1} = trainNetwork(slide_all_tr_x, slide_tr_out, layers_4 , options_1);    
+     
+     % 5)
+     nets{end + 1} = trainNetwork(slide_all_tr_x, slide_tr_out, layers_6 , options_1);
+
+     %%% INCREMENTAL
+     % 6) small 
+     nets{end + 1} = trainNetwork(incre_small_tr_x, incre_tr_out, layers_i_1 , options_1);
+ 
+     % 7) small
+     nets{end + 1} = trainNetwork(incre_small_tr_x, incre_tr_out, layers_i_2 , options_1);
+ 
+     % 8) all 
+     nets{end + 1} = trainNetwork(incre_all_tr_x, incre_tr_out, layers_5 , options_2);
+
+    end
+
+##### Elec -> worse than smaller datasets
+    "3"    "0.07161"     "8"    "0.17826"    "3"    "0.054087"
+    "4"    "0.072802"    "3"    "0.18829"    "2"    "0.054209"
+    "2"    "0.073216"    "2"    "0.19272"    "5"    "0.056093"
+    "5"    "0.074144"    "4"    "0.19675"    "4"    "0.059436"
+    "8"    "0.075395"    "1"    "0.19687"    "8"    "0.061119"
+    "1"    "0.076003"    "5"    "0.20191"    "1"    "0.070659"
+    "6"    "0.089365"    "6"    "0.22048"    "6"    "0.085532"
+    "7"    "0.090354"    "7"    "0.22324"    "7"    "0.10065" 
+    
+##### Eating -> worse than smaller dataset
+    "1"    "0.10814"    "1"    "0.087646"    "1"    "0.069542"
+    "8"    "0.11132"    "2"    "0.088027"    "4"    "0.071043"
+    "4"    "0.11171"    "3"    "0.091076"    "5"    "0.073204"
+    "5"    "0.11209"    "4"    "0.091672"    "8"    "0.075838"
+    "3"    "0.11351"    "5"    "0.091917"    "2"    "0.077845"
+    "2"    "0.11388"    "8"    "0.099661"    "3"    "0.078878"
+    "7"    "0.34203"    "6"    "0.13229"     "7"    "0.20192" 
+    "6"    "0.36638"    "7"    "0.14767"     "6"    "0.27224"
 
 
 
