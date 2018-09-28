@@ -556,24 +556,52 @@ Experiments will be divided according to the kind (elec or heating) and cosideri
     "6"    "0.36638"    "7"    "0.14767"     "6"    "0.27224"
 
 
+Notes about the experiments with the increased datasets (both in terms of “slide” and “incremental” dataset) 
+
+We consider the minimum training time to be of 6 weeks (and constant for the slide_horizon dataset and “starting from” 6 weeks for the incremental dataset) for the heating dataset; while of 4 weeks for the elec dataset (with similar consideration for what concern the sliding and incremental division of the dataset).
+
+In all the cases the nets trained on the new (bigger) dataset perform worse than the same (best) nets trained on the smaller datasets (sliding of 4 weeks for the heat and of 2 weeks for the elec). In Particular the performances are quite similar for the best cases (season 1 and 3 of elec and season 2 and 3 of heating) but they degradate much more on the other seasons.
+##### Possible explanation
+This can be explained, by the fact that increasing the time horizon of the training we capture some seasonal components (trends) that cannot be anymore approximated by linear functions (or other very simple function). This trends could be probably learned if we had more training data for that particular season.
+since we have few data, a less wide “training window" allows us to implicitly approximate the seasonal component (typically sinusoidal) with a very simple function, that is easier to learn.
+
+As a proof of concept, have a look of the 2 figure below.
+
 
 ![Alt text](figures/Figure_1.png?raw=true "Figure 1")
+Figure 1
+4 weeks of training on heating dataset. Simple trend to learn.
+m = 1;
+n = 3;
+i = 2;
 
 
+![Alt text](figures/Figure_2.png?raw=true "Figure 2")
+Figure 2
+6 weeks of training on heating dataset. Harder trend to learn.
+m = 1; % 1:2
+n = 3; % 1:3
+i = 2; % 0:14
 
-TO DO
-modify the most promising nets in order to try to increase the perfomances. (working by season and preprocessed dataset).
+
+These considerations are supported by the fact that a net trained on the incremental dataset does not always perform better (on average) than a net trained on the slide_horizion dataset.
 
 
-# TO DO
-1) save the best net configuration (not considering the worst seasons)
-2) training with memory lstm -> on the small dataset -> increasing the training set for each prediction
-3) training the best nets (configurations) on bigger datasets (consider 6 weeks instead of 4 for training -> apply sliding_horizon)
+#### Comparison between lstm nets and ff nets on the incremental dataset.
+In particular we trained the lstm nets on the 11 features datasets, while the ff on the 26 feature datasets. Both for elec and heating.
+Performances are generally worse for the lstm nets. The main problem here is the “beginning of the day”. That means that the first ours of the test datasets, are predicted very badly by the lstm nets. However the prediction accuracy generally increase a lot as we come close to the end of the testing dataset.
+On the other hand, the ff nets perform similarly throughout all the test dataset [no particular improvements (on average) for some hours of the testing day].
 
-- compare all the results based on different metrics (rmse, ...)
-- compare nets according to :
-1) overall performance
-2) seasonal performance
-3) month ? 
-4) aggregation?
-5) ...
+Thing to keep in mind:
+1) The training time, which is way more large for the lstm nets.
+2) The training parameters are very very important for the final prediction accuracy for the lstm nets. Less so for the ff neural networks.
+
+
+# Conclusions
+To train effectively a deep neural network a lot of data is necessary. If the training data is not clean enough or non enough in quatity, simpler model are preferable. 
+It might be a good idea in general to preprocess the dataset by removing seasonal trends and addinf then back after the prediction. 
+In our experiments, we noticed that nets trained on smaller dataset perform better than on bigger datasets. This might be due to seasonal components and "noise", that become harder to approximate when the train set is increased (in this case, when we increase the training dataset we are introducing annual (seasonal) components. To reduce this problem we should have data of the same season for many years). 
+In our experiements we also compared fully lstm networks with ff neural networks. In particular we wanted to check if the lstm was able to learn the importance of previous (past) data [for instance, remember (and use) the data of the same day (of the test day) of the previous week]. Experiments showed us that ff perform better both we less data and with more data. However, the performace of the lstm nets performs better as the training data increases. Another remarkable fact is that the lstm perform quite badly dunting the first hours of the test set, and they prediction accuracy generally increases toward the end of the test day. On the other hand the ff nets exibit more or less the same prediction accuracy through out all the day. 
+For what concern trainig time and paramenters: there is not a really noticable difference when we cosider differet ff nets. Things change when we consider lstm nets. In particulat, in lstm the training time is much large and the training parameter are much more critical (validation is suggested).
+
+it's important to test different networks stratcures and compare the performance. For instance, one might think that the best nets for a prediction problem (of a sequence) is a lstm net. However, as we noticed in our experiement, there are many factors contribute to the overall accuracy and there are many other factors (not directly connected to the accuracy; for instance the training time) that must be taken into consideration. In our experiments a net trained with more input features (where the additional features where just past data (used in order to introduce some sort of sequentiality)) and smaller traing dataset, performed better than more complex nets such as lstm. And were trained in much less time.
