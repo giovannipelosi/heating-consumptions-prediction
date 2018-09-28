@@ -557,6 +557,8 @@ Experiments will be divided according to the kind (elec or heating) and cosideri
 
 
 
+![Alt text](figure/Figure_1.png?raw=true "Figure 1")
+
 
 
 TO DO
