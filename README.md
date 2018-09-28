@@ -554,7 +554,8 @@ Experiments will be divided according to the kind (elec or heating) and cosideri
     "2"    "0.11388"    "8"    "0.099661"    "3"    "0.078878"
     "7"    "0.34203"    "6"    "0.13229"     "7"    "0.20192" 
     "6"    "0.36638"    "7"    "0.14767"     "6"    "0.27224"
-
+    
+###### In the tables above the laberl 6 and 7 represent lstm nets, while all the other are ff nets
 
 Notes about the experiments with the increased datasets (both in terms of “slide” and “incremental” dataset) 
 
