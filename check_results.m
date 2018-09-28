@@ -37,11 +37,12 @@ for out_num = 1:3
                 
                 
                 %% compute rmse
+                number_of_models = 28;
                 A = table2array(T);
                 original = A(:, end);
                 for col = 1:size(A,2)-1
                     rmse = sqrt(mean((A(:,col)-original).^2));
-                    row = (m-1) * 28 * 3 + (n-1) * 28 + i;
+                    row = (m-1) * number_of_models * 3 + (n-1) * number_of_models + i ;
                     bunch_of_nets_rmse_total_by_day(row , col) = rmse;
                 end
                 
@@ -120,4 +121,21 @@ results_heat = [season_1_rmse_mean_heat , season_2_rmse_mean_heat, season_3_rmse
 top_ten_elec = results_elec(1:10 , :);
 top_ten_heat = results_heat(1:10 , :);
 
+%% season ranking
+rank = zeros(84,2);
+% choose the best 2 seasons
+ col_a = 3; % number of the column (names)
+ col_b = 5;
+ % choose the dataset
+ data = results_heat; 
+ 
+for i = [1:84] % i is the rank of the net in the first column
+    for j = [1:84]
+        if (data(i,col_a) == data(j, col_b))
+            %rank(i, : ) = [i , i * double(data(i,col_a + 1))  + double(data(j, col_b + 1)) * j];
+            rank(i , : ) = [i, i + j];
+        end
+    end
+end
 
+rank = sortrows(rank, 2);
