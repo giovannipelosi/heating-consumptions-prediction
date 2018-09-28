@@ -545,7 +545,7 @@ Experiments will be divided according to the kind (elec or heating) and cosideri
     "6"    "0.089365"    "6"    "0.22048"    "6"    "0.085532"
     "7"    "0.090354"    "7"    "0.22324"    "7"    "0.10065" 
     
-##### Eating -> worse than smaller dataset
+##### Heating -> worse than smaller dataset
     "1"    "0.10814"    "1"    "0.087646"    "1"    "0.069542"
     "8"    "0.11132"    "2"    "0.088027"    "4"    "0.071043"
     "4"    "0.11171"    "3"    "0.091076"    "5"    "0.073204"
@@ -554,8 +554,6 @@ Experiments will be divided according to the kind (elec or heating) and cosideri
     "2"    "0.11388"    "8"    "0.099661"    "3"    "0.078878"
     "7"    "0.34203"    "6"    "0.13229"     "7"    "0.20192" 
     "6"    "0.36638"    "7"    "0.14767"     "6"    "0.27224"
-
-
 
 
 
