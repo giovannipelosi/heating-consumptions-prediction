@@ -606,3 +606,13 @@ In our experiements we also compared fully lstm networks with ff neural networks
 For what concern trainig time and paramenters: there is not a really noticable difference when we cosider differet ff nets. Things change when we consider lstm nets. In particulat, in lstm the training time is much large and the training parameter are much more critical (validation is suggested).
 
 It is important to test different networks stractures and compare the performance. For instance, one might think that the best nets for a prediction problem (of a sequence) is a lstm net. However, as we noticed in our experiement, there are many factors that contribute to the overall accuracy and there are many other factors (not directly connected to the accuracy; for instance the training time) that must be taken into consideration. In our experiments a net trained with more input features (where the additional features where just past data (used in order to introduce some sort of sequentiality)) and smaller traing dataset, performed better than more complex nets such as lstm networks. And were trained in much less time.
+
+
+## best RESULTS (outputs)
+We have created a file for each test day, in which we have saved the output of the best nets. These files are saved in each season/kind/ folder under the name (expreiment test day)_best_output_(number). For each of these files(tables) there are the figure representing them, saved as (expreiment test day)_best_output_figure_(number). All this files are stored in the /Results folder. For instance a path to this files is " 'Results/season' + string(n) + '/' + kind(m) +  '/' + string(i) + '_best_output_1.dat' ". 
+Each of these files represnt a table composed by the 7 best nets represented by column. For instance the first column, represents the net that performed better on average over all the experiment for each kind, considering the 2 best seasons (1 and 3 for elec, 2 and 3 for heat). 
+These tables represent the outputs of the nets trained on the smallest dataset (4 weeks for heat and 2 weeks for elec)
+
+For the results of the nets trained on the bigger datasets, look in the Resluts_big folder. (files that ends with "output_big_2")
+
+
