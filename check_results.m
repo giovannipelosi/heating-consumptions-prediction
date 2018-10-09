@@ -133,7 +133,7 @@ for i = [1:84] % i is the rank of the net in the first column
     for j = [1:84]
         if (data(i,col_a) == data(j, col_b))
             %rank(i, : ) = [i , i * double(data(i,col_a + 1))  + double(data(j, col_b + 1)) * j];
-            rank(i , : ) = [i, i + j];
+            rank(i , : ) = [i, i + j]; % the "i" correspond to the position of the net of col_a. in the case of results_elec, col_a = 1 -> i = 1 corresponds to all_deseason_40
         end
     end
 end
