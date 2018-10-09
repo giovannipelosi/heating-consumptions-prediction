@@ -535,6 +535,10 @@ Experiments will be divided according to the kind (elec or heating) and cosideri
 
     end
 
+nets (1,2,3,4,5) are ffnn trained on the sliding_horizon dataset
+nets(6,7) are lstm nn trained on the incremental dataset with 11 features
+nets(8) are ffnn trained on the incremental dataset with 26 features
+
 ##### Elec -> worse than smaller datasets
     "3"    "0.07161"     "8"    "0.17826"    "3"    "0.054087"
     "4"    "0.072802"    "3"    "0.18829"    "2"    "0.054209"
