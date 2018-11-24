@@ -15,7 +15,7 @@ https://machinelearningmastery.com/improve-deep-learning-performance/
 ## data
 #### training data structure
 The data contains samples about the consumptions of electricity and heat of an hospital.
-The data is divided in three seasons and each season is subdivided in two groups: one containing the heating data and the other the electricity data. Finally for each of these gropus there are 28 datasets where each of them contains the data of 28 days (for training) and 1 (the next day) for testing.
+The data is divided in three seasons and each season is subdivided in two groups: one containing the heating data and the other the electricity data. Finally for each of these groups there are 28 datasets where each of them contains the data of 28 days (for training) and 1 (the next day) for testing.
 For each day we have 24 samples (one per hour).
 More in details :
 - 1fold_out_tr contains the consumptions of the training data (the output of the training (heat or elec)
@@ -137,7 +137,7 @@ network used (in order):
     'MiniBatchSize', 40,...
     'Verbose',0 );
    
-Here we used the same nework structure and we tryied to work a bit on the data. In particular we each network has been trained on four different datasets:
+Here we used the same nework structure and we tryied to work a bit on the data. In particular each network has been trained on four different datasets:
 - small original
 - small de_season (we simply tried to remove the "day" periodc trend, computed by avareging the consumption (grouped by hour) for the days of the training dataset) 
 - all original
@@ -369,7 +369,7 @@ Then there is a distinction between slide_horizon and incremental data.
 #### heating
 1) We have 6 week of training and one day (the next) for testing in the sliding_horizon dataset -> totally 15 datasets (0 to 14)
 2) In the incremental dataset we have 6 week for training and the next for testing (fro the dataset 0) then we add the next day in the train dataset and we test on the next (not in the training) day. And so on. In this way, for the last test we have 8 weeks for training and 1 day of testing.
-The sliding horizon datasets will be used to test if a classical feed forward nn perfroms better than with 4 weeks trainign (original sliding horizon dataset). While the incremental dataset will be used to train a lstm nn in order to see if the nets improves with more data for training (in particular here we will compare the performance of a ffnn trainend on the 26 features dataset, with the performance of a lstm nn trained on the 11 freatures dataset. The goal is to check if the memory layers of the lstm nn can substitute the absense of the 15 features (these features are just past data)
+The sliding horizon datasets will be used to test if a classical feed forward nn perfroms better than with 4 weeks training (original sliding horizon dataset). While the incremental dataset will be used to train a lstm nn in order to see if the nets improves with more data for training (in particular here we will compare the performance of a ffnn trainend on the 26 features dataset, with the performance of a lstm nn trained on the 11 freatures dataset. The goal is to check if the memory layers of the lstm nn can substitute the absense of the 15 features (these features are just past data)
 #### elec
 Similar to the heating dataset be here we have 4 weeks of training and the last 2 weeks for testing (2 weeks less of data, compared to the heating dataset)
 
