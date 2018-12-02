@@ -1,0 +1,23 @@
+Table 1
+;;;;;;
+;Electricity Top 10;;;;;
+;Season 1;;Season 2;;Season 3;
+;    kind of net :   ;    rmse      ;    kind of net :   ;    rmse     ;    kind of net :   ;    rmse
+;" ""all_deseason_40""  ";" ""0.059021""   ";" ""small_deseason_70""";" ""0.11623""   ";" ""all_deseason_56""  ";" ""0.055899"""
+;" ""all_deseason_72""  ";" ""0.059078""   ";" ""small_deseason_58""";" ""0.11646""   ";" ""all_deseason_80""  ";" ""0.055916"""
+;" ""all_deseason_32""  ";" ""0.059283""   ";" ""small_deseason_82""";" ""0.11652""   ";" ""all_deseason_44""  ";" ""0.056047"""
+;" ""all_deseason_44""  ";" ""0.059527""   ";" ""small_deseason_62""";" ""0.11675""   ";" ""all_deseason_40""  ";" ""0.056232"""
+;" ""all_deseason_76""  ";" ""0.060081""   ";" ""small_deseason_66""";" ""0.11722""   ";" ""all_deseason_36""  ";" ""0.056552"""
+;" ""all_deseason_68""  ";" ""0.060191""   ";" ""small_deseason_74""";" ""0.11753""   ";" ""all_deseason_76""  ";" ""0.056567"""
+;" ""all_deseason_16""  ";" ""0.060398""   ";" ""small_deseason_78""";" ""0.11814""   ";" ""all_deseason_68""  ";" ""0.056705"""
+;"""all_deseason_80""   ";"""0.060421""    ";"""small_57""          ";"""0.1183""     ";"""all_deseason_60""   ";"""0.057028"""
+;" ""all_deseason_8""   ";" ""0.061021""   ";" ""small_61""         ";" ""0.12021""   ";" ""all_deseason_64""  ";" ""0.057055"""
+;"  ""all_deseason_36"" ";"  ""0.061359""  ";"  ""small_81""        ";"  ""0.12337""  ";"  ""all_deseason_72"" ";"  ""0.057151"""
+;;;;;;
+;;;;;;
+;;;;;;
+;;;;;;
+;;;;;;
+;;;;;;
+;;;;;;
+;;;;;;
